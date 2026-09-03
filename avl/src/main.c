@@ -56,140 +56,140 @@ int main(void)
 
         switch (opcao) {
 
-        case CRIAR_AVL:
+            case CRIAR_AVL:
 
-            if (raiz != NULL) {
-                printf("A arvore ja foi criada.\n");
+                if (raiz != NULL) {
+                    printf("A arvore ja foi criada.\n");
+                    break;
+                }
+
+                printf("Digite a chave da raiz: ");
+                scanf("%d", &chave);
+
+                raiz = avl_criar(chave);
+
+                if (raiz == NULL) {
+                    printf("Erro ao criar a arvore.\n");
+                }
+                else {
+                    printf("Arvore criada com sucesso.\n");
+                }
+
+                break;
+
+            case INSERIR_AVL:
+
+                printf("Digite a chave para inserir: ");
+                scanf("%d", &chave);
+
+                raiz = avl_inserir(raiz, chave);
+
+                printf("Operacao de insercao realizada.\n");
+
+                break;
+
+            case REMOVER_AVL:
+
+                printf("Digite a chave para remover: ");
+                scanf("%d", &chave);
+
+                raiz = avl_remover(raiz, chave);
+
+                printf("Operacao de remocao realizada.\n");
+
+                break;
+
+            case PESQUISAR_AVL: {
+
+                printf("Digite a chave para pesquisar: ");
+                scanf("%d", &chave);
+
+                no_t *resultado =
+                avl_pesquisar(raiz, chave);
+
+                if (resultado != NULL) {
+                    printf(
+                        "Chave %d encontrada.\n",
+                        resultado->chave
+                    );
+                }
+                else {
+                    printf(
+                        "Chave %d nao encontrada.\n",
+                        chave
+                    );
+                }
+
                 break;
             }
 
-            printf("Digite a chave da raiz: ");
-            scanf("%d", &chave);
+            case IMPRIMIR_AVL:
 
-            raiz = avl_criar(chave);
+                do{
+                    printf("Digite o tipo de percurso: \n");
+                    printf("    1) Pré-ordem \n");
+                    printf("    2) In-ordem \n");
+                    printf("    3) Pós-ordem \n");
+                    printf("    4) Largura \n");
+                    printf("    0) Retornar menu principal \n");
 
-            if (raiz == NULL) {
-                printf("Erro ao criar a arvore.\n");
-            }
-            else {
-                printf("Arvore criada com sucesso.\n");
-            }
+                    scanf("%d", &opcao);
 
-            break;
+                    switch(opcao){
+                        case PRE_ORDEM:
+                            avl_imprime_percurso_pre_ordem(raiz);
+                            break;
+                        case IN_ORDEM:
+                            avl_imprime_percurso_in_ordem(raiz);
+                            break;
+                        case POS_ORDEM:
+                            avl_imprime_percurso_pos_ordem(raiz);
+                            break;
+                        case LARGURA:
+                            avl_imprime_percurso_em_largura(raiz);
+                            break;
+                        case SAIR:
 
-        case INSERIR_AVL:
+                            break;
+                        default:
+                            printf("Opcao invalida.\n");
+                            break;
+                    }
+                }while(opcao != 0);
 
-            printf("Digite a chave para inserir: ");
-            scanf("%d", &chave);
+                opcao = CRIAR_AVL;
 
-            raiz = avl_inserir(raiz, chave);
+                break;
 
-            printf("Operacao de insercao realizada.\n");
+                        case CALC_ALTURA:
+                            chave = avl_calcula_altura(raiz);
 
-            break;
+                            printf("Altura: %d.\n",chave);
 
-        case REMOVER_AVL:
+                            printf("Operacao de remocao realizada.\n");
 
-            printf("Digite a chave para remover: ");
-            scanf("%d", &chave);
-
-            raiz = avl_remover(raiz, chave);
-
-            printf("Operacao de remocao realizada.\n");
-
-            break;
-
-        case PESQUISAR_AVL: {
-
-            printf("Digite a chave para pesquisar: ");
-            scanf("%d", &chave);
-
-            no_t *resultado =
-                avl_pesquisar(raiz, chave);
-
-            if (resultado != NULL) {
-                printf(
-                    "Chave %d encontrada.\n",
-                    resultado->chave
-                );
-            }
-            else {
-                printf(
-                    "Chave %d nao encontrada.\n",
-                    chave
-                );
-            }
-
-            break;
-        }
-
-        case IMPRIMIR_AVL:
-
-            do{
-                printf("Digite o tipo de percurso: \n");
-                printf("    1) Pré-ordem \n");
-                printf("    2) In-ordem \n");
-                printf("    3) Pós-ordem \n");
-                printf("    4) Largura \n");
-                printf("    0) Retornar menu principal \n");
-
-                scanf("%d", &opcao);
-
-                switch(opcao){
-                    case PRE_ORDEM:
-                        avl_imprime_percurso_pre_ordem(raiz);
-                        break;
-                    case IN_ORDEM:
-                        avl_imprime_percurso_in_ordem(raiz);
-                        break;
-                    case POS_ORDEM:
-                        avl_imprime_percurso_pos_ordem(raiz);
-                        break;
-                    case LARGURA:
-                        avl_imprime_percurso_em_largura(raiz);
-                        break;
-                    case SAIR:
-
-                        break;
-                    default:
-                        printf("Opcao invalida.\n");
-                        break;
-                }
-            }while(opcao != 0);
-
-            opcao = CRIAR_AVL;
-
-            break;
-
-        case CALC_ALTURA:
-            chave = avl_calcula_altura(raiz);
-
-            printf("Altura: %d.\n",chave);
-
-            printf("Operacao de remocao realizada.\n");
-
-            break;
+                            break;
 
 
-        case DESTRUIR_AVL:
+                        case DESTRUIR_AVL:
 
-            avl_destruir(raiz);
+                            avl_destruir(raiz);
 
-            raiz = NULL;
+                            raiz = NULL;
 
-            printf("Arvore destruida.\n");
+                            printf("Arvore destruida.\n");
 
-            break;
+                            break;
 
-        case SAIR:
+                        case SAIR:
 
-            printf("Encerrando programa.\n");
+                            printf("Encerrando programa.\n");
 
-            break;
+                            break;
 
-        default:
+                        default:
 
-            printf("Opcao invalida.\n");
+                            printf("Opcao invalida.\n");
         }
 
     } while (opcao != 0);

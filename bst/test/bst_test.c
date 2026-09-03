@@ -7,12 +7,12 @@ static void test_criar(void)
 {
     no_t *raiz = bst_criar(50);
 
-   assert(raiz != NULL);
-   assert(raiz->chave == 50);
-   assert(raiz->esq == NULL);
-   assert(raiz->dir == NULL);
+    assert(raiz != NULL);
+    assert(raiz->chave == 50);
+    assert(raiz->esq == NULL);
+    assert(raiz->dir == NULL);
 
-   bst_destruir(raiz);
+    bst_destruir(raiz);
 }
 
 static void test_inserir_esquerda(void)
@@ -95,7 +95,7 @@ static void test_pesquisar_inexistente(void)
     raiz = bst_inserir(raiz, 70);
 
     no_t *resultado =
-        bst_pesquisar(raiz, 100);
+    bst_pesquisar(raiz, 100);
 
     assert(resultado == NULL);
 
@@ -201,6 +201,53 @@ static void test_remover_raiz(void)
     bst_destruir(raiz);
 }
 
+static void test_calcular_altura(void)
+{
+    no_t *raiz = NULL;
+
+    assert(bst_calcula_altura(raiz) == -1);
+
+    raiz = bst_inserir(raiz, 50);
+    assert(bst_calcula_altura(raiz) == 0);
+
+    raiz = bst_inserir(raiz, 30);
+    raiz = bst_inserir(raiz, 70);
+    raiz = bst_inserir(raiz, 20);
+    assert(bst_calcula_altura(raiz) == 2);
+
+    bst_destruir(raiz);
+}
+
+static void test_operacoes_em_arvore_vazia(void)
+{
+    assert(bst_pesquisar(NULL, 10) == NULL);
+    assert(bst_remover(NULL, 10) == NULL);
+    assert(bst_imprime_percurso_pre_ordem(NULL) == NULL);
+    assert(bst_imprime_percurso_in_ordem(NULL) == NULL);
+    assert(bst_imprime_percurso_pos_ordem(NULL) == NULL);
+    bst_imprime_percurso_em_largura(NULL);
+    bst_destruir(NULL);
+}
+
+static void test_ignorar_chave_duplicada(void)
+{
+    no_t *raiz = bst_criar(50);
+    no_t *raiz_original = raiz;
+
+    raiz = bst_inserir(raiz, 50);
+
+    assert(raiz == raiz_original);
+    assert(raiz->esq == NULL && raiz->dir == NULL);
+    bst_destruir(raiz);
+}
+
+static void test_remover_unico_no(void)
+{
+    no_t *raiz = bst_criar(50);
+    raiz = bst_remover(raiz, 50);
+    assert(raiz == NULL);
+}
+
 int main(void)
 {
     test_criar();
@@ -216,6 +263,11 @@ int main(void)
     test_remover_no_com_um_filho();
     test_remover_no_com_dois_filhos();
     test_remover_raiz();
+
+    test_calcular_altura();
+    test_operacoes_em_arvore_vazia();
+    test_ignorar_chave_duplicada();
+    test_remover_unico_no();
 
     printf("Todos os testes passaram!\n");
 
