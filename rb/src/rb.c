@@ -44,12 +44,12 @@ no_t *rb_transplantar(no_t *raiz, no_t *atual, no_t *substituto)
 
 }
 
-no_t * rb_rotacao_esquerda(no_t *raiz)
+no_t * rb_rotacao_esquerda(no_t *raiz, no_t *no)
 {
 
 }
 
-no_t * rb_rotacao_direita(no_t *raiz)
+no_t * rb_rotacao_direita(no_t *raiz, no_t *no)
 {
 
 }
@@ -60,17 +60,17 @@ no_t *rb_pesquisar(no_t *raiz, chave_t chave)
 
 }
 
-no_t * rb_imprime_percurso_pre_ordem(no_t *raiz)
+void rb_imprime_percurso_pre_ordem(no_t *raiz)
 {
 
 }
 
-no_t * rb_imprime_percurso_in_ordem(no_t *raiz)
+void rb_imprime_percurso_in_ordem(no_t *raiz)
 {
 
 }
 
-no_t * rb_imprime_percurso_pos_ordem(no_t *raiz)
+void rb_imprime_percurso_pos_ordem(no_t *raiz)
 {
 
 }
