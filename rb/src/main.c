@@ -1,26 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "bst.h"
+#include "rb.h"
+
+enum menu_opcoes
+{
+    CRIAR_RB=1,
+    INSERIR_RB=2,
+    REMOVER_RB=3,
+    PESQUISAR_RB=4,
+    IMPRIMIR_RB=5,
+    CALC_ALTURA=6,
+    DESTRUIR_RB=7,
+    SAIR=0
+};
+
+enum submenu_imprimir
+{
+    PRE_ORDEM=1,
+    IN_ORDEM=2,
+    POS_ORDEM=3,
+    LARGURA=4
+};
 
 static void imprimir_menu(void)
 {
     printf("\n");
     printf("============================\n");
-    printf("      ÁRVORE BST\n");
+    printf("      ÁRVORE RB\n");
     printf("============================\n");
     printf("1 - Criar arvore\n");
     printf("2 - Inserir chave\n");
     printf("3 - Remover chave\n");
     printf("4 - Pesquisar chave\n");
-    printf("5 - Imprimir bst\n");
+    printf("5 - Imprimir rb\n");
     printf("6 - Calcular altura\n");
     printf("7 - Destruir arvore\n");
     printf("0 - Sair\n");
     printf("============================\n");
     printf("Opcao: ");
 }
-
 
 int main(void)
 {
@@ -37,7 +56,7 @@ int main(void)
 
         switch (opcao) {
 
-        case 1:
+        case CRIAR_RB:
 
             if (raiz != NULL) {
                 printf("A arvore ja foi criada.\n");
@@ -47,7 +66,7 @@ int main(void)
             printf("Digite a chave da raiz: ");
             scanf("%d", &chave);
 
-            raiz = bst_criar(chave);
+            raiz = rb_criar(chave);
 
             if (raiz == NULL) {
                 printf("Erro ao criar a arvore.\n");
@@ -58,35 +77,35 @@ int main(void)
 
             break;
 
-        case 2:
+        case INSERIR_RB:
 
             printf("Digite a chave para inserir: ");
             scanf("%d", &chave);
 
-            raiz = bst_inserir(raiz, chave);
+            raiz = rb_inserir(raiz, chave);
 
             printf("Operacao de insercao realizada.\n");
 
             break;
 
-        case 3:
+        case REMOVER_RB:
 
             printf("Digite a chave para remover: ");
             scanf("%d", &chave);
 
-            raiz = bst_remover(raiz, chave);
+            raiz = rb_remover(raiz, chave);
 
             printf("Operacao de remocao realizada.\n");
 
             break;
 
-        case 4: {
+        case PESQUISAR_RB: {
 
             printf("Digite a chave para pesquisar: ");
             scanf("%d", &chave);
 
             no_t *resultado =
-                bst_pesquisar(raiz, chave);
+                rb_pesquisar(raiz, chave);
 
             if (resultado != NULL) {
                 printf(
@@ -104,40 +123,46 @@ int main(void)
             break;
         }
 
-        case 5:
+        case IMPRIMIR_RB:
 
-            printf("Digite o tipo de percurso: \n");
-            printf("    1) Pré-ordem \n");
-            printf("    2) In-ordem \n");
-            printf("    3) Pós-ordem \n");
-            printf("    4) Largura \n");
+            do{
+                printf("Digite o tipo de percurso: \n");
+                printf("    1) Pré-ordem \n");
+                printf("    2) In-ordem \n");
+                printf("    3) Pós-ordem \n");
+                printf("    4) Largura \n");
+                printf("    0) Retornar menu principal \n");
 
-            scanf("%d", &opcao);
+                scanf("%d", &opcao);
 
-            switch(opcao){
-                case 1:
-                    bst_imprime_percurso_pre_ordem(raiz);
-                    break;
-                case 2:
-                    bst_imprime_percurso_in_ordem(raiz);
-                    break;
-                case 3:
-                    bst_imprime_percurso_pos_ordem(raiz);
-                    break;
-                case 4:
-                    bst_imprime_percurso_em_largura(raiz);
-                    break;
-                default:
-                    bst_imprime_percurso_in_ordem(raiz);
-                    break;
-            }
+                switch(opcao){
+                    case PRE_ORDEM:
+                        rb_imprime_percurso_pre_ordem(raiz);
+                        break;
+                    case IN_ORDEM:
+                        rb_imprime_percurso_in_ordem(raiz);
+                        break;
+                    case POS_ORDEM:
+                        rb_imprime_percurso_pos_ordem(raiz);
+                        break;
+                    case LARGURA:
+                        rb_imprime_percurso_em_largura(raiz);
+                        break;
+                    case SAIR:
 
-            printf("\n Operacao realizada.\n");
+                        break;
+                    default:
+                        printf("Opcao invalida.\n");
+                        break;
+                }
+            }while(opcao != 0);
+
+            opcao = CRIAR_RB;
 
             break;
 
-        case 6:
-            chave = bst_calcula_altura(raiz);
+        case CALC_ALTURA:
+            chave = rb_calcula_altura(raiz);
 
             printf("Altura: %d.\n",chave);
 
@@ -146,9 +171,9 @@ int main(void)
             break;
 
 
-        case 7:
+        case DESTRUIR_RB:
 
-            bst_destruir(raiz);
+            rb_destruir(raiz);
 
             raiz = NULL;
 
@@ -156,7 +181,7 @@ int main(void)
 
             break;
 
-        case 0:
+        case SAIR:
 
             printf("Encerrando programa.\n");
 
@@ -174,7 +199,7 @@ int main(void)
      * saia sem escolher a opção 5.
      */
 
-    bst_destruir(raiz);
+    rb_destruir(raiz);
 
     return EXIT_SUCCESS;
 }
